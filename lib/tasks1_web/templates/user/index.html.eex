@@ -6,7 +6,8 @@
       <th>Email</th>
       <th>Name</th>
       <th>Manager Status</th>
-      <th></th>
+      <th>User's Manager</th>
+      <th>Add/Remove From Team</th>
     </tr>
   </thead>
   <tbody>
@@ -15,6 +16,15 @@
       <td><%= user.email %></td>
       <td><%= user.name %></td>
       <td><%= user.managerstatus %></td>
+      <%= if not is_nil(user.manager_id) do %>
+          <td><%= Tasks1.Account.get_user!(user.manager_id).name%></td>
+          <td><span><%= link "Remove from Team", to: user_path(@conn, :show, user), class:  "btn btn-secondary" %></span></td>
+      <%= else %>
+            <td> No Manager</td>
+            <td><span><%= link "Add to Team", to: user_path(@conn, :show, user), class:  "btn btn-primary" %></span></td>
+      <% end %>
+
+      
     </tr>
 <% end %>
   </tbody>

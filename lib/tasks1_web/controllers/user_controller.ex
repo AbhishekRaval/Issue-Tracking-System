@@ -26,9 +26,26 @@ defmodule Tasks1Web.UserController do
     end
   end
 
+
   def show(conn, %{"id" => id}) do
     user = Account.get_user!(id)
-    render(conn, "show.html", user: user)
+    if is_nil(user.manager_id) do
+     user1 = Ecto.Changeset.change user, manager_id: conn.assigns.current_user.id
+     msg = "User Added to Team successfully."
+   else
+    user1 = Ecto.Changeset.change user, manager_id: nil  
+    msg = "User Removed from Team successfully."    
+    end
+    case Tasks1.Repo.update user1 do
+        {:ok, struct}       -> # Updated with success
+        users = Account.list_users()
+        conn
+        |> put_flash(:info, msg)
+        |> render("index.html", users: users)
+        {:error, changeset} -> # Something went wrong
+        users = Account.list_users()
+        render(conn, "index.html", users: users)
+      end
   end
 
   def edit(conn, %{"id" => id}) do
@@ -39,7 +56,6 @@ defmodule Tasks1Web.UserController do
 
   def update(conn, %{"id" => id, "user" => user_params}) do
     user = Account.get_user!(id)
-
     case Account.update_user(user, user_params) do
       {:ok, user} ->
         conn
