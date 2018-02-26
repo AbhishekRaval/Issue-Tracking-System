@@ -14,7 +14,6 @@
   </div>
 
  <div class="form-group">
-    <%= label f, "created by: " <> (@current_user.name) , class: "control-label" %>
     <%= hidden_input f, :assigns_id, value: @current_user.id, class: "form-control" %>
     <%= error_tag f, :assigns_id %>
   </div>

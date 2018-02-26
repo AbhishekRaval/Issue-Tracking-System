@@ -10,5 +10,4 @@ defmodule Tasks1Web.PageController do
   	tasks = TaskDetails.list_tasks()
     render conn, "feed.html", tasks: tasks
   end
-
 end

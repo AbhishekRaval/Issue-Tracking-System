@@ -42,5 +42,26 @@ def create(conn, %{"task" => task_params}) do
     end
   end
 
+def addtoteam(conn, %{"id" => id}) do
+  user = Account.get_user!(id)
+  if is_nil(user.manager_id) do
+   user1 = Ecto.Changeset.change user, manager_id: conn.assigns.current_user.id
+   msg = user.name <> " Added to Team successfully."
+  else
+  user1 = Ecto.Changeset.change user, manager_id: nil  
+  msg = user.name <> " Removed from Team successfully."    
+  end
+  case Tasks1.Repo.update user1 do
+      {:ok, struct}       -> # Updated with success
+      users = Account.list_users()
+      conn
+      |> put_flash(:info, msg)
+      |> render("index.html", users: users)
+      {:error, changeset} -> # Something went wrong
+      users = Account.list_users()
+      render(conn, "index.html", users: users)
+    end
+  end
+
 
 mix phx.gen.html TaskDetails Task tasks user_id:references:users assigns_id:references:users name:string description:text complete:boolean timespent:time 

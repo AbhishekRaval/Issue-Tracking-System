@@ -5,27 +5,24 @@
     <tr>
       <th>Email</th>
       <th>Name</th>
-      <th>Manager Status</th>
       <th>User's Manager</th>
-      <th>Add/Remove From Team</th>
     </tr>
   </thead>
   <tbody>
 <%= for user <- @users do %>
+  <%= if is_nil(user.manager_id) and 
+          user.id != @current_user.id or 
+                user.manager_id === @current_user.id do %>
     <tr>
       <td><%= user.email %></td>
       <td><%= user.name %></td>
-      <td><%= user.managerstatus %></td>
       <%= if not is_nil(user.manager_id) do %>
-          <td><%= Tasks1.Account.get_user!(user.manager_id).name%></td>
-          <td><span><%= link "Remove from Team", to: user_path(@conn, :show, user), class:  "btn btn-secondary" %></span></td>
+          <td><%= user.manager.name%></td>
       <%= else %>
             <td> No Manager</td>
-            <td><span><%= link "Add to Team", to: user_path(@conn, :show, user), class:  "btn btn-primary" %></span></td>
-      <% end %>
-
-      
+      <% end %>      
     </tr>
+  <% end %>  
 <% end %>
   </tbody>
 </table>

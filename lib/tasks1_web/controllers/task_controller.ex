@@ -11,8 +11,9 @@ end
 
 def new(conn, _params) do
   users = Tasks1.Account.list_users()
+  users1 = Enum.filter(users,fn(x) -> x.manager_id === conn.assigns.current_user.id end)
   changeset = TaskDetails.change_task(%Task{})
-  render(conn, "new.html", changeset: changeset, users: users)
+  render(conn, "new.html", changeset: changeset, users: users1)
 end
 
 def create(conn, %{"task" => task_params}) do
