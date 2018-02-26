@@ -1,3 +1,4 @@
+<%= if @current_user do %>
 <h2>Listing Tasks</h2>
 
 <table class="table">
@@ -32,3 +33,7 @@
 </table>
 
 <span><%= link "Back",  to: "/feed" %></span>
+<%= else %>
+<p>Sorry You're logged out of the System, </p>
+<%= link "Login Again", to: "/", class: "btn btn-link" %> 
+<%= end %>

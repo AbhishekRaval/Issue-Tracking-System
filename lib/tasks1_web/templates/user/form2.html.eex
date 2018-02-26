@@ -17,8 +17,8 @@
     <%= error_tag f, :name %>
   </div>
 
-   <div class="form-group" hidden>
-    <%= checkbox f, :managerstatus, class: "checkbox" %>
+   <div class="form-group">
+    <%= checkbox f, :managerstatus, type: "hidden", value: "true", class: "checkbox" %>
     <%= error_tag f, :managerstatus %>
   </div>
 

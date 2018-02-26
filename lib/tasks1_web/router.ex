@@ -37,6 +37,8 @@ defmodule Tasks1Web.Router do
     get "/profile", UserController, :profile
     get "/taskreports", UserController, :taskreports
     get "/addtoteam/:id", UserController, :updatemanager
+    get "/users/newmanager",UserController, :newmanager
+
 
     resources "/users", UserController
     resources "/tasks", TaskController

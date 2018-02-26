@@ -1,3 +1,4 @@
+<%= if @current_user do %>
 <h2>Listing Users</h2>
 
 <table class="table">
@@ -6,6 +7,7 @@
       <th>Email</th>
       <th>Name</th>
       <th>User's Manager</th>
+      <th>User manager bool</th>
     </tr>
   </thead>
   <tbody>
@@ -18,8 +20,13 @@
       <%= else %>
             <td> No Manager</td>
       <% end %>
+      <td><%= user.managerstatus %></td>
 <% end %>
   </tbody>
 </table>
 
 <span><%= link "Back",  to: "/feed" %></span>
+<%= else %>
+<p>Sorry You're logged out of the System, </p>
+<%= link "Login Again", to: "/", class: "btn btn-link" %> 
+<%= end %>

@@ -14,6 +14,11 @@ defmodule Tasks1Web.UserController do
     render(conn, "new.html", changeset: changeset)
   end
 
+  def newmanager(conn, _params) do
+    changeset = Account.change_user(%User{})
+    render(conn, "new2.html", changeset: changeset)
+  end
+
   def create(conn, %{"user" => user_params}) do
     case Account.create_user(user_params) do
       {:ok, user} ->
