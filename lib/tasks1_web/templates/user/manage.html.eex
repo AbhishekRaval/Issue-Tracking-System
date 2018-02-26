@@ -11,9 +11,9 @@
   </thead>
   <tbody>
 <%= for user <- @users do %>
-  <%= if is_nil(user.manager_id) and  
-          user.id != @current_user.id and 
-            user.id !=  @current_user.manager.id or 
+  <%= if is_nil(user.manager_id) and
+          (is_nil(@current_user.manager_id) or @current_user.manager_id != user.id) and  
+          user.id != @current_user.id  or 
                 user.manager_id === @current_user.id  do %>
     <tr>
       <td><%= user.email %></td>

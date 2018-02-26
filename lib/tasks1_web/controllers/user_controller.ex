@@ -26,7 +26,6 @@ defmodule Tasks1Web.UserController do
     end
   end
 
-
   def show(conn, %{"id" => id}) do    
     user = Account.get_user!(id)
     render(conn, "show.html", user: user)
@@ -51,24 +50,22 @@ defmodule Tasks1Web.UserController do
   end
 
   def delete(conn, %{"id" => id}) do
-    user = Account.get_user!(id)
+    user = Account.get_user!(id) 
     {:ok, _user} = Account.delete_user(user)
-
     conn
     |> delete_session(:user_id)
     |> put_flash(:info, "User deleted successfully.")
     |> redirect(to: "/")
   end
 
-
   def updatemanager(conn, %{"id"=> id}) do
     user = Account.get_user!(id)
-  if is_nil(user.manager_id) do
-   user1 = Ecto.Changeset.change user, manager_id: conn.assigns.current_user.id
-   msg = user.name <> " Added to Team successfully."
-  else
-  user1 = Ecto.Changeset.change user, manager_id: nil  
-  msg = user.name <> " Removed from Team successfully."    
+    if is_nil(user.manager_id) do
+     user1 = Ecto.Changeset.change user, manager_id: conn.assigns.current_user.id
+     msg = user.name <> " Added to Team successfully."
+   else
+    user1 = Ecto.Changeset.change user, manager_id: nil  
+    msg = user.name <> " Removed from Team successfully."    
   end
   case Tasks1.Repo.update user1 do
       {:ok, struct}       -> # Updated with success
@@ -87,14 +84,15 @@ defmodule Tasks1Web.UserController do
     render(conn, "manage.html", users: users)
   end
 
-  def taskreports(conn,_params) do
-    users = Account.list_users()
-    render(conn, "taskreports.html", users: users)
-  end
-
   def profile(conn,_params) do
     users = Account.list_users()
     render(conn, "profile.html", users: users)    
   end
-  
+
+  def taskreports(conn,_params) do
+    tasks = Tasks1.TaskDetails.list_tasks()
+    tasks1 = Enum.filter(tasks,fn(x) -> x.user.manager_id === conn.assigns.current_user.id end)
+    render(conn, "taskreports.html", tasks: tasks1)
+  end
+
 end

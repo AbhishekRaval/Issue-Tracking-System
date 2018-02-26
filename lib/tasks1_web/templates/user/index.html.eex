@@ -10,9 +10,6 @@
   </thead>
   <tbody>
 <%= for user <- @users do %>
-  <%= if is_nil(user.manager_id) and 
-          user.id != @current_user.id or 
-                user.manager_id === @current_user.id do %>
     <tr>
       <td><%= user.email %></td>
       <td><%= user.name %></td>
@@ -20,9 +17,7 @@
           <td><%= user.manager.name%></td>
       <%= else %>
             <td> No Manager</td>
-      <% end %>      
-    </tr>
-  <% end %>  
+      <% end %>
 <% end %>
   </tbody>
 </table>

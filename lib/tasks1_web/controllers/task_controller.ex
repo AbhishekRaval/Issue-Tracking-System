@@ -49,7 +49,8 @@ def create(conn, %{"task" => task_params}) do
     task = TaskDetails.get_task!(id)
     changeset = TaskDetails.change_task(task)
     users = Tasks1.Account.list_users()
-    render(conn, "edit.html", task: task, changeset: changeset, users: users)
+    users1 = Enum.filter(users,fn(x) -> x.manager_id === conn.assigns.current_user.id end)
+    render(conn, "edit.html", task: task, changeset: changeset, users: users1)
   end
 
   def update(conn, %{"id" => id, "task" => task_params}) do
@@ -77,12 +78,12 @@ def create(conn, %{"task" => task_params}) do
         end
       end
 
-      def delete(conn, %{"id" => id}) do
-        task = TaskDetails.get_task!(id)
-        {:ok, _task} = TaskDetails.delete_task(task)
+  def delete(conn, %{"id" => id}) do
+    task = TaskDetails.get_task!(id)
+    {:ok, _task} = TaskDetails.delete_task(task)
 
-        conn
-        |> put_flash(:info, "Task deleted successfully.")
-        |> redirect(to: "/feed")
-      end
-    end
+    conn
+    |> put_flash(:info, "Task deleted successfully.")
+    |> redirect(to: "/feed")
+  end
+end
