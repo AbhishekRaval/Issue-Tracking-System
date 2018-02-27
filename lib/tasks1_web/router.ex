@@ -33,6 +33,8 @@ defmodule Tasks1Web.Router do
 
     get "/", PageController, :index
     get "/feed", PageController, :feed
+
+
     get "/addtoteam", UserController, :addtoteam
     get "/profile", UserController, :profile
     get "/taskreports", UserController, :taskreports
@@ -42,6 +44,7 @@ defmodule Tasks1Web.Router do
 
     resources "/users", UserController
     resources "/tasks", TaskController
+    get "/tasktimeblocks", TaskController, :tracktimeblocks
 
     #creating Login/logout from scratch
     post "/session", SessionController, :create

@@ -54,6 +54,13 @@ def create(conn, %{"task" => task_params}) do
           end
       end
 
+   
+  def tracktimeblocks(conn,task_params) do
+    tasks = TaskDetails.list_tasks()
+    task = TaskDetails.get_task!(task_params["task_id"])
+    render(conn, "show.html", task: task)
+  end   
+
   def delete(conn, %{"id" => id}) do
     task = TaskDetails.get_task!(id)
     {:ok, _task} = TaskDetails.delete_task(task)

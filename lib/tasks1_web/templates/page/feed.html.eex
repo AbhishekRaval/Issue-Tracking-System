@@ -35,6 +35,8 @@
 						 <br>
 
 					<p>
+					<div class="float-right"> 
+						<%= link "Track All TimeBlocks", to: task_path(@conn, :tracktimeblocks,%{"task_id"=>task.id}), class: "btn btn-info ml-3" %></div>	
 					<div class="float-right">	
 						<button  class="timeblock-btn btn btn-secondary"
 						data-task-id="<%= task.id %>"
