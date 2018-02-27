@@ -17,12 +17,7 @@ def new(conn, _params) do
 end
 
 def create(conn, %{"task" => task_params}) do
-  time = task_params["timespent"]
-  {h,_} = Integer.parse(time["hour"])
-  {m,_} = Integer.parse(time["minute"])
-  totaltime = h*60 + m
-  if (totaltime >= 15 || m==0) && (rem totaltime,15) == 0 do
-   case TaskDetails.create_task(task_params) do 
+  case TaskDetails.create_task(task_params) do 
     {:ok, post} ->
       conn
       |> put_flash(:info, "Task created successfully.")
@@ -31,13 +26,6 @@ def create(conn, %{"task" => task_params}) do
         users = Tasks1.Account.list_users()
         render(conn, "new.html", changeset: changeset, users: users)
       end
-    else
-      changeset = Tasks1.TaskDetails.change_task(%Task{})
-      users = Tasks1.Account.list_users()
-      conn
-      |> put_flash(:error, "Select Time Spent in 15 minutes Timer Interval.")
-      |> render("new.html", users: users, changeset: changeset)
-    end
   end
 
   def show(conn, %{"id" => id}) do
@@ -55,11 +43,6 @@ def create(conn, %{"task" => task_params}) do
 
   def update(conn, %{"id" => id, "task" => task_params}) do
     task = TaskDetails.get_task!(id)
-    time = task_params["timespent"]
-    {h,_} = Integer.parse(time["hour"])
-    {m,_} = Integer.parse(time["minute"])
-    totaltime = h*60 + m
-    if (totaltime >= 15 || m==0) && (rem totaltime,15) == 0 do
       case TaskDetails.update_task(task, task_params) do 
         {:ok, post} ->
           conn
@@ -69,13 +52,6 @@ def create(conn, %{"task" => task_params}) do
             users = Tasks1.Account.list_users()
             render("edit.html", task: task, changeset: changeset, users: users)
           end
-        else
-          changeset = Tasks1.TaskDetails.change_task(task)
-          users = Tasks1.Account.list_users()
-          conn
-          |> put_flash(:error, "Select Time Spent in 15 minutes Timer Interval.")
-          |> render("edit.html", task: task, changeset: changeset, users: users)
-        end
       end
 
   def delete(conn, %{"id" => id}) do

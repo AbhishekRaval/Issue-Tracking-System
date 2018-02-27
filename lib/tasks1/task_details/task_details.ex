@@ -21,6 +21,7 @@ defmodule Tasks1.TaskDetails do
     Repo.all(Task)
     |>Repo.preload(:user)
     |>Repo.preload(:assigns)
+    |>Repo.preload(:timetracks)
   end
 
   @doc """
@@ -41,6 +42,7 @@ defmodule Tasks1.TaskDetails do
     Repo.get!(Task, id)
     |>Repo.preload(:user)
     |>Repo.preload(:assigns)
+    |>Repo.preload(:timetracks)
   end
 
   @doc """
@@ -109,3 +111,5 @@ defmodule Tasks1.TaskDetails do
     Task.changeset(task, %{})
   end
 end
+
+

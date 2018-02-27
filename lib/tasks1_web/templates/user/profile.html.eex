@@ -1,8 +1,8 @@
-<h2> Profile: </h2>
+<h2 class="pb-4"><%=  @current_user.name|>String.capitalize() %>'s Profile </h2>
 
-<h4> Managers: </h4>
+<h4> <%=  @current_user.name|>String.capitalize() %>'s Managers: </h4>
 <%= if not is_nil(@current_user.manager_id) do %>
-<table class="table">
+<table class="table pb-3">
   <thead>
     <tr>
       <th>Email</th>
@@ -20,7 +20,7 @@
   <p> You have No Manager. </p>
  <% end %> 
 
-<h4> Underlings: </h4>
+<h4 class="pt-4"> <%=  @current_user.name|>String.capitalize() %>'s Underlings: </h4>
 
 <table class="table">
   <thead>

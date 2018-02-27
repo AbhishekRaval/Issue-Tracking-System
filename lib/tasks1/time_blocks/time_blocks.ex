@@ -21,6 +21,12 @@ defmodule Tasks1.TimeBlocks do
     Repo.all(Block)
   end
 
+  ## Returns the list of time_blocks where the ids of such time blocks are equal to 
+  ## taskid obtained from input
+  def list_all_task_timeblocks(task_id) do
+    Repo.all(from eachblock in Block, where: eachblock.task_id == ^task_id)
+  end
+
   @doc """
   Gets a single block.
 
