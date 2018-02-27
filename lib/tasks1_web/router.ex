@@ -49,7 +49,8 @@ defmodule Tasks1Web.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", Tasks1Web do
-  #   pipe_through :api
-  # end
+  scope "/api/v1", Tasks1Web do
+     pipe_through :api
+     resources "/blocks", BlockController, except: [:new, :edit]
+  end
 end
