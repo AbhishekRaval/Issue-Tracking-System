@@ -6,7 +6,7 @@
       <th>Name</th>
       <th>Description</th>
       <th>Assigned to:</th>
-      <th>Assigned By:</th>
+      <th>Track Time details</th>
       <th>Complete</th>
       <th> Operations </th>
 
@@ -19,7 +19,8 @@
       <td><%= task.name %></td>
       <td><%= task.description %></td>
       <td><%= task.user.name %></td>
-      <td><%= task.assigns.name %></td>
+      <td><div class="float-right"> 
+						<%= link "Track All TimeBlocks", to: task_path(@conn, :tracktimeblocks,%{"task_id"=>task.id}), class: "btn btn-info ml-3" %></div></td>
       <%= if task.complete do %>
         <td>Completed!</td>
       <%= else %> 
