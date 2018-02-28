@@ -6,7 +6,7 @@ defmodule Tasks1.TimeBlocks.Block do
 
   schema "blocks" do
     field :ends, :naive_datetime
-    field :starts, :naive_datetime
+    field :starts, :naive_datetime, default: nil
     belongs_to :task, Tasks1.TaskDetails.Task
     timestamps()
   end

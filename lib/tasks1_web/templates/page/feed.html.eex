@@ -30,8 +30,8 @@
 					<div class="float-right">
 						<p><span><%= link "Edit Task Details", to: task_path(@conn, :edit, task) %></span>
 						<span> &nbsp;&nbsp;</span>
-						<span> <%= link "Delete Task", to: task_path(@conn, :delete, task), method: :delete, data: [confirm: "Are you sure?"] %></span>
-						 </div></p>
+						<span> <%= link "Delete Task", to: task_path(@conn, :delete, task), method: :delete, data: [confirm: "Are you sure?"] %></span></p>
+						 </div>
 						 <br>
 
 					<p>

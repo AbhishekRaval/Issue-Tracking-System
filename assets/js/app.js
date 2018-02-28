@@ -32,9 +32,13 @@ function update_buttons() {
     let task_id = $(bb).data('task-id');
     let run_id = $(bb).data('run-id');
     if (run_id == "started") {
+    	 $(bb).removeClass("btn-secondary")
+      $(bb).addClass("btn-primary")
       $(bb).text("Stop Working on Task");
     }
     else {
+    	$(bb).removeClass("btn-primary")
+      $(bb).addClass("btn-secondary")
       $(bb).text("Start Working on Task");
     }  
   });
@@ -66,7 +70,7 @@ function stopTracking(task_id) {
     contentType: "application/json; charset=UTF-8",
     data: text,
     success: (resp) => { set_button(task_id, "notstarted"); alert("Time Block added successfully from "
-     + startdate + " to " + end); },
+     + startdate + " to " + enddate); },
     error: () => {alert("failed to update time");}
   });
 }
@@ -88,6 +92,19 @@ function timeblock_click(ev) {
     stopTracking(task_id);
   }
 }
+
+$(".delete-block-btn").click(function(ev){
+	let delbtn = $(ev.target);
+	let block_id = delbtn.data("block-id");
+	$.ajax(deleteditpath + "/" + block_id , {
+    method: "delete",
+    dataType: "json",
+    contentType: "application/json; charset=UTF-8",
+    data: "",
+    success: () => { alert("Time Block deleted successfully"); location.reload();},
+    error: () => {alert("failed to delete time block");}
+  });
+});
 
 function init() {
   if (!$('.timeblock-btn')) {

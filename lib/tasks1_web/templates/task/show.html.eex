@@ -1,26 +1,31 @@
+<script>
+  window.deleteditpath =  "<%= block_path(@conn, :index) %>"
+</script>
 <h2>All Task Details</h2>
 
 <ul>
-   <li>
-    <strong>User:</strong>
-    <%= @task.user.name %>
-  </li>
+ <li>
+  <strong>User:</strong>
+  <%= @task.user.name %>
+</li>
 
-  <li>
-    <strong>Name:</strong>
-    <%= @task.name %>
-  </li>
+<li>
+  <strong>Name:</strong>
+  <%= @task.name %>
+</li>
 
-  <li>
-    <strong>Description:</strong>
-    <%= @task.description %>
-  </li>
+<li>
+  <strong>Description:</strong>
+  <%= @task.description %>
+</li>
 
-  <li>
-    <strong>Complete:</strong>
-    <%= @task.complete %>
-  </li>
+<li>
+  <strong>Complete:</strong>
+  <%= @task.complete %>
+</li>
 </ul>
+
+<p><%= #link "New Block", to: block_path(@conn, :new) %></p>
 
 <table class="table">
   <thead>
@@ -29,19 +34,24 @@
       <th>StartTime</th>
       <th>EndTime</th>
       <th>Taskid</th>
+      <th>Actions: </th>
       <th></th>
     </tr>
   </thead>
   <tbody>
-<%= for timeblock <- @task.time_tracks do %>
+    <%= for timeblock <- @task.time_tracks do %>
     <tr>
-      <td><%=  timeblock.task.name %></td>
       <td><%= timeblock.id %></td>
-      <td><%= timeblock.starts %></td>
-      <td><%= timeblock.ends %></td>
-    </tr>
-<% end %>
-  </tbody>
-
-<span><%= link "Edit", to: task_path(@conn, :edit, @task) %></span>
+      <td><%= NaiveDateTime.to_string(timeblock.starts)|>String.slice(0..-8) %></td>
+      <td><%= NaiveDateTime.to_string(timeblock.ends)|>String.slice(0..-8) #https://hexdocs.pm/elixir/NaiveDateTime.html%></td>
+      <td><%= timeblock.task.id  %></td>
+      <td> <button class="edit-block-btn btn btn-link" data-block-task-id = "<%= timeblock.task.id %>" data-block-task-starts =  "<%= timeblock.starts %>" data-block-task-ends =  "<%= timeblock.ends %>" 
+      data-block-block-id =  "<%= timeblock.id %>" > Edit</button>
+        <span><button class="delete-block-btn btn btn-link" data-block-id="<%= timeblock.id %>">Delete Time Block</button></span></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+<span><%= link "Edit  ", to: task_path(@conn, :edit, @task) %></span>
+|
 <span><%= link "Back", to: "/feed" %></span>
